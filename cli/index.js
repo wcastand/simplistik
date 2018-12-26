@@ -5,11 +5,6 @@ const meow = require('meow')
 const path = require('path')
 const execa = require('execa')
 
-const simplistik = require('../server')
-
-const init = require('./init')
-const createUser = require('./createUser')
-
 const knex_path = path.resolve(__dirname, '../node_modules/.bin/knex')
 const cli = meow(
   `
@@ -47,6 +42,7 @@ const cli = meow(
 
 switch (cli.input[0]) {
   case 'init':
+    const init = require('./init')
     init({ createDefaultUser: cli.flags.admin })
     break
   case 'migrate:make':
@@ -66,10 +62,12 @@ switch (cli.input[0]) {
       console.error('A username needs to be provided. (-u)')
       process.exit()
     }
+    const createUser = require('./createUser')
     createUser(cli.flags.username)
     break
   case 'start':
   default:
+    const simplistik = require('../server')
     simplistik()
     break
 }
