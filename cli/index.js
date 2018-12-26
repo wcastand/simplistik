@@ -49,13 +49,17 @@ switch (cli.input[0]) {
     execa(knex_path, ['migrate:make', cli.input[1]]).stdout.pipe(process.stdout)
     break
   case 'migrate:latest':
-    execa(knex_path, ['migrate:latest']).stdout.pipe(process.stdout)
+    await execa
+      .shell(`${knex_path} migrate:latest --knexfile ./knexfile.js`)
+      .then(() => console.info(`migration OK.`))
     break
   case 'seed:make':
     execa(knex_path, ['seed:make', cli.input[1]]).stdout.pipe(process.stdout)
     break
   case 'seed:run':
-    execa(knex_path, ['seed:run']).stdout.pipe(process.stdout)
+    await execa
+      .shell(`${knex_path} seed:run --knexfile ./knexfile.js`)
+      .then(() => console.info(`seed OK.`))
     break
   case 'new:user':
     if (!cli.flags.username) {

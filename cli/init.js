@@ -124,7 +124,7 @@ module.exports = async ({ createDefaultUser }) => {
     .shell(`${knex_path} migrate:latest --knexfile ./knexfile.js`)
     .then(() => console.info(`migration OK.`))
   await execa
-    .shell(`${knex_path} seed:run  --knexfile ./knexfile.js`)
+    .shell(`${knex_path} seed:run --knexfile ./knexfile.js`)
     .then(() => console.info(`seeding OK.`))
 
   if (createDefaultUser) {
