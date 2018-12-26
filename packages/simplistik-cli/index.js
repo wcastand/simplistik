@@ -4,7 +4,6 @@ require('dotenv').config()
 const meow = require('meow')
 const path = require('path')
 const execa = require('execa')
-const { server } = require('simplistik')
 
 const init = require('./init')
 const newUser = require('./new-user')
@@ -44,6 +43,6 @@ const cli = meow(
 
 if (cli.input[0] === 'init') init()
 else if (cli.input[0] === 'new:user') newUser(cli.flags.username)
-else server()
+else require('simplistik').server()
 
 process.exit()
