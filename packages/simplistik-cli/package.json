@@ -22,7 +22,7 @@
     "execa": "^1.0.0",
     "knex": "^0.16.3",
     "meow": "^5.0.0",
-    "simplistik": "^0.2.0"
+    "simplistik": "^0.2.6"
   },
   "bugs": "https://github.com/wcastand/simplistik/issues"
 }
