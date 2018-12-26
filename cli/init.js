@@ -100,7 +100,7 @@ function createDBFile() {
     const db_path = path.resolve(process.cwd(), 'db.js')
     const db_content = `require('dotenv').config()
     const { resolve } = require('path')
-    const environment = process.env.ENVIRONMENT || 'development'
+    const environment = process.env.NODE_ENV || 'development'
     const config = require(resolve(process.cwd(), './knexfile.js'))[environment]
     module.exports = require('knex')(config)
     `
