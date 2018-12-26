@@ -1,9 +1,6 @@
 {
   "name": "simplistik",
   "bin": "./cli/index.js",
-  "scripts": {
-    "knex": "knex"
-  },
   "dependencies": {
     "dotenv": "^6.2.0",
     "execa": "^1.0.0",
