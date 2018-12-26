@@ -1,25 +1,37 @@
 const fs = require('fs')
 const path = require('path')
-const execa = require('execa')
-const jwt = require('jsonwebtoken')
-const { createMigrationName } = require('./utils')
 
-const knex_path = path.resolve(process.cwd(), './node_modules/.bin/knex')
 const knex_migration_dir = path.resolve(process.cwd(), './migrations')
 const knex_seeds_dir = path.resolve(process.cwd(), './seeds')
 const graphql_types_dir = path.resolve(process.cwd(), './types')
 const graphql_resolvers_dir = path.resolve(process.cwd(), './resolvers')
 
-const user_migration_content = `exports.up = (knex, Promise) => knex.schema.createTable('simplistik_user', table => {
-    table.increments('id').primary()
-    table.string('username').unique()
-  })
-exports.down = (knex, Promise) => knex.schema.dropTable('simplistik_user');
-`
+// From knex
+// Ensure that we have 2 places for each of the date segments.
+function padDate(segment) {
+  segment = segment.toString()
+  return segment[1] ? segment : `0${segment}`
+}
 
-const user_seed_content = `exports.seed = (knex, Promise) => knex('simplistik_user').del()
-  .then(() => knex('simplistik_user').insert({username: 'admin'}))
-`
+// Get a date object in the correct format, without requiring a full out library
+// like "moment.js".
+function yyyymmddhhmmss() {
+  const d = new Date()
+  return (
+    d.getFullYear().toString() +
+    padDate(d.getMonth() + 1) +
+    padDate(d.getDate()) +
+    padDate(d.getHours()) +
+    padDate(d.getMinutes()) +
+    padDate(d.getSeconds())
+  )
+}
+
+// coming from migration knex
+const createMigrationName = name => {
+  if (name[0] === '-') name = name.slice(1)
+  return yyyymmddhhmmss() + '_' + name + '.js'
+}
 
 function createSimplistikMigration() {
   return new Promise((resolve, reject) => {
@@ -32,6 +44,12 @@ function createSimplistikMigration() {
       knex_migration_dir,
       createMigrationName('simplistik_user'),
     )
+    const user_migration_content = `exports.up = (knex, Promise) => knex.schema.createTable('simplistik_user', table => {
+      table.increments('id').primary()
+      table.string('username').unique()
+    })
+    exports.down = (knex, Promise) => knex.schema.dropTable('simplistik_user');
+    `
     fs.writeFileSync(user_migration_file, user_migration_content, 'utf-8')
     return resolve()
   })
@@ -106,22 +124,10 @@ function createDBFile() {
   })
 }
 
-module.exports = async () => {
-  await execa.shell(`${knex_path} init`).then(() => console.info(`Knex config created.`))
-
-  await createDBFile().then(() => console.info(`default DB file created.`))
-  await createSchemaGraphQL().then(() => console.info(`GraphQL schemas file created.`))
-  await createResolversGraphQL().then(() => console.info(`GraphQL resolvers file created.`))
-
-  await createSimplistikMigration().then(() => console.info(`Knex migration file created.`))
-  await createSimplistikSeed().then(() => console.info(`Knex seed file created.`))
-
-  await execa
-    .shell(`${knex_path} migrate:latest --knexfile ./knexfile.js`)
-    .then(() => console.info(`migration OK.`))
-  await execa
-    .shell(`${knex_path} seed:run --knexfile ./knexfile.js`)
-    .then(() => console.info(`seeding OK.`))
-
-  process.exit()
+module.exports = {
+  createSimplistikMigration,
+  createSimplistikSeed,
+  createSchemaGraphQL,
+  createResolversGraphQL,
+  createDBFile,
 }

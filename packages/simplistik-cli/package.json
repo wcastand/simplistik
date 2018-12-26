@@ -1,0 +1,26 @@
+{
+  "name": "simplistik-cli",
+  "bin": "./index.js",
+  "version": "0.1.1",
+  "description": "bootstrap a graphql/knex DB as fast as possible",
+  "homepage": "https://github.com/wcastand/simplistik",
+  "keywords": [
+    "graphql",
+    "knex",
+    "database",
+    "db"
+  ],
+  "author": "wcastand <wcastand@gmail.com> (https://github.com/wcastand)",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wcastand/simplistik.git"
+  },
+  "dependencies": {
+    "execa": "^1.0.0",
+    "knex": "^0.16.3",
+    "meow": "^5.0.0",
+    "simplistik": "^0.1.1"
+  },
+  "bugs": "https://github.com/wcastand/simplistik/issues"
+}

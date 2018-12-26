@@ -1,7 +1,5 @@
-const path = require('path')
-const execa = require('execa')
 const jwt = require('jsonwebtoken')
-const db = require('../server/db')
+const db = require('./db')
 
 module.exports = async username => {
   try {
@@ -17,5 +15,4 @@ module.exports = async username => {
   } catch (err) {
     console.error(err)
   }
-  process.exit()
 }

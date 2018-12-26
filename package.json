@@ -1,19 +1,26 @@
 {
   "name": "simplistik",
-  "bin": "./cli/index.js",
-  "version": "0.1.0",
-  "dependencies": {
-    "dotenv": "^6.2.0",
-    "execa": "^1.0.0",
-    "express": "^4.16.4",
-    "express-graphql": "^0.7.1",
-    "graphql": "^14.0.2",
-    "jsonwebtoken": "^8.4.0",
-    "knex": "^0.16.3",
-    "meow": "^5.0.0",
-    "merge-graphql-schemas": "^1.5.8",
-    "morgan": "^1.9.1",
-    "pg": "^7.7.1",
-    "sqlite3": "^4.0.4"
+  "private": true,
+  "description": "bootstrap a graphql/knex DB as fast as possible",
+  "workspaces": [
+    "packages/*"
+  ],
+  "homepage": "https://github.com/wcastand/simplistik",
+  "bugs": "https://github.com/wcastand/simplistik/issues",
+  "author": "wcastand <wcastand@gmail.com> (https://github.com/wcastand)",
+  "license": "MIT",
+  "keywords": [
+    "graphql",
+    "knex",
+    "database",
+    "db"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wcastand/simplistik.git"
+  },
+  "version": "0.1.1",
+  "devDependencies": {
+    "oao": "^1.5.1"
   }
 }
