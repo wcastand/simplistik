@@ -19,4 +19,5 @@ module.exports = async () => {
 
   await createSimplistikMigration().then(() => console.info(`Knex migration file created.`))
   await createSimplistikSeed().then(() => console.info(`Knex seed file created.`))
+  process.exit()
 }
