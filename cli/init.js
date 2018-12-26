@@ -120,8 +120,12 @@ module.exports = async ({ createDefaultUser }) => {
   await createSimplistikMigration().then(() => console.info(`Knex migration file created.`))
   await createSimplistikSeed(createDefaultUser).then(() => console.info(`Knex seed file created.`))
 
-  await execa.shell(`${knex_path} migrate:latest`).then(() => console.info(`migration OK.`))
-  await execa.shell(`${knex_path} seed:run`).then(() => console.info(`seeding OK.`))
+  await execa
+    .shell(`${knex_path} migrate:latest --knexfile ./knexfile.js`)
+    .then(() => console.info(`migration OK.`))
+  await execa
+    .shell(`${knex_path} seed:run  --knexfile ./knexfile.js`)
+    .then(() => console.info(`seeding OK.`))
 
   if (createDefaultUser) {
     const token = jwt.sign({ id: 1, username: 'admin' }, process.env.secret || 'yoursecret')
