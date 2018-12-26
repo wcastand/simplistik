@@ -19,21 +19,12 @@ const newUser = require('./new-user')
 
     Examples
       $ simplistik init
-      $ simplistik migrate:make products_migration
-      $ simplistik migrate:latest
-      $ simplistik seed:make products_seed
-      $ simplistik seed:run
       $ simplistik new:user -u username
       $ simplistik start
   `,
     {
       booleanDefault: false,
       flags: {
-        admin: {
-          type: 'boolean',
-          default: false,
-          alias: 'a',
-        },
         username: {
           type: 'string',
           alias: 'u',
