@@ -1,12 +1,12 @@
-const db = require('./db')
 const jwt = require('jsonwebtoken')
+const db = require('./db')
 
 async function authMiddleware(req, res, next) {
   const bearerToken = req.headers.authorization
   if (!bearerToken) return res.status(401).send('missing API Key')
   try {
     const token = bearerToken.replace('Bearer ', '')
-    const verified = jwt.verify(token, process.env.secret)
+    const verified = jwt.verify(token, process.env.secret || 'yoursecret')
     const authUser = await db('simplistik_user')
       .where('id', verified.id || null)
       .andWhere('username', verified.username || null)

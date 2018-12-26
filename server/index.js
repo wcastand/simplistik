@@ -7,15 +7,16 @@ const graphqlHTTP = require('express-graphql')
 const { fileLoader, mergeResolvers, mergeTypes } = require('merge-graphql-schemas')
 
 const authMiddleware = require('./authMiddleware')
-const typesArray = fileLoader(path.join(process.cwd(), './types'))
-const resolversArray = fileLoader(path.join(process.cwd(), './resolvers'))
 
 module.exports = (options = {}) => {
   const app = express()
+  const typesArray = fileLoader(path.join(process.cwd(), './types'))
+  const resolversArray = fileLoader(path.join(process.cwd(), './resolvers'))
+
   const typeDefs = mergeTypes(typesArray)
   const rootValue = mergeResolvers(resolversArray)
-
   const schema = buildSchema(typeDefs)
+
   const graphql = graphqlHTTP({
     schema,
     rootValue,
@@ -23,7 +24,10 @@ module.exports = (options = {}) => {
   })
 
   app.use(morgan('dev'))
-  app.use('/', authMiddleware, graphql)
+  app.use('/graphql', authMiddleware, graphql)
+
+  app.listen(process.env.PORT || 3001)
+  console.log(`listen on ${process.env.PORT || 3001}`)
 
   return app
 }
