@@ -19,7 +19,7 @@
     "type": "git",
     "url": "https://github.com/wcastand/simplistik.git"
   },
-  "version": "0.2.2",
+  "version": "0.2.3",
   "devDependencies": {
     "oao": "^1.5.1"
   }
