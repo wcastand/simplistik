@@ -3,7 +3,7 @@
   "bin": {
     "simplistik": "./index.js"
   },
-  "version": "0.2.3",
+  "version": "0.2.4",
   "description": "bootstrap a graphql/knex DB as fast as possible",
   "homepage": "https://github.com/wcastand/simplistik",
   "keywords": [
