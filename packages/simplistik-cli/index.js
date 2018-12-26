@@ -8,41 +8,41 @@ const execa = require('execa')
 const init = require('./init')
 const newUser = require('./new-user')
 
-const cli = meow(
-  `
-	Usage
-    $ simplistik <input>
+;(async () => {
+  const cli = meow(
+    `
+    Usage
+      $ simplistik <input>
 
-  Options
-    --username, -u Username for a new user, return an api_key
+    Options
+      --username, -u Username for a new user, return an api_key
 
-	Examples
-		$ simplistik init
-		$ simplistik migrate:make products_migration
-		$ simplistik migrate:latest
-		$ simplistik seed:make products_seed
-    $ simplistik seed:run
-    $ simplistik new:user -u username
-    $ simplistik start
-`,
-  {
-    booleanDefault: false,
-    flags: {
-      admin: {
-        type: 'boolean',
-        default: false,
-        alias: 'a',
-      },
-      username: {
-        type: 'string',
-        alias: 'u',
+    Examples
+      $ simplistik init
+      $ simplistik migrate:make products_migration
+      $ simplistik migrate:latest
+      $ simplistik seed:make products_seed
+      $ simplistik seed:run
+      $ simplistik new:user -u username
+      $ simplistik start
+  `,
+    {
+      booleanDefault: false,
+      flags: {
+        admin: {
+          type: 'boolean',
+          default: false,
+          alias: 'a',
+        },
+        username: {
+          type: 'string',
+          alias: 'u',
+        },
       },
     },
-  },
-)
-
-if (cli.input[0] === 'init') init()
-else if (cli.input[0] === 'new:user') newUser(cli.flags.username)
-else require('simplistik').server()
-
-process.exit()
+  )
+  if (cli.input[0] === 'init') await init()
+  else if (cli.input[0] === 'new:user') await newUser(cli.flags.username)
+  else await require('simplistik').app()
+  process.exit()
+})()
