@@ -5,7 +5,7 @@ const meow = require('meow')
 const path = require('path')
 const execa = require('execa')
 
-const knex_path = path.resolve(__dirname, '../node_modules/.bin/knex')
+const knex_path = path.resolve(process.cwd(), './node_modules/.bin/knex')
 const cli = meow(
   `
 	Usage
