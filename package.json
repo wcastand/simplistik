@@ -1,6 +1,7 @@
 {
   "name": "simplistik",
   "bin": "./cli/index.js",
+  "version": "0.0.1",
   "dependencies": {
     "dotenv": "^6.2.0",
     "execa": "^1.0.0",
