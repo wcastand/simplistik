@@ -4,7 +4,7 @@ const execa = require('execa')
 const jwt = require('jsonwebtoken')
 const { createMigrationName } = require('./utils')
 
-const knex_path = path.resolve(__dirname, '../node_modules/.bin/knex')
+const knex_path = path.resolve(process.cwd(), './node_modules/.bin/knex')
 const knex_migration_dir = path.resolve(process.cwd(), './migrations')
 const knex_seeds_dir = path.resolve(process.cwd(), './seeds')
 const graphql_types_dir = path.resolve(process.cwd(), './types')
