@@ -16,33 +16,51 @@ Use express Graphql to graphql base.
 
 #### Commands
 
-- knex migrations
-- knex seeds
-- create api_key
-- delete api_key
+- knex migrations (make/run)
+- knex seeds (make/run)
+- create user/api_key
+- delete user/api_key
 
 ## Command line
 
 #### init
 
 - create knex default config
-- create knex default migrations for user auth and api_key
+- create default db.js
+- create knex default migrations
+- create knex default seeds
+- create default graphql types
+- create default graphql resovlers
 
-#### create-key (--mail, -m)
+#### migrate:make <name>
+
+- create knex migration with <name>
+
+#### migrate:latest
+
+- migrate:latest from knex
+
+#### seed:make <name>
+
+- create knex seed with <name>
+
+#### seed:run
+
+- seed:run from knex
+
+#### TODO : create-user (--mail, -m)
 
 - create a user and print his api_key
 
-#### delete-key (--mail, -m)
+#### TODO : delete-user (--mail, -m)
 
-- delete the user and his api_key from db
+- delete the user from db
 
 ## Usage
 
-```js
+```javascript
 const simplistik = require('simplistik')
 
-const api = simplistik(schema, resolvers, opts)
-api.start()
-
-// start server on $PORT or http://localhost:3000
+const api = simplistik(opts) // return express app
+api.listen(process.env.PORT || 3001) // start server on $PORT or http://localhost:3001
 ```
