@@ -1,6 +1,8 @@
 {
   "name": "simplistik-cli",
-  "bin": "./index.js",
+  "bin": {
+    "simplistik": "./index.js"
+  },
   "version": "0.2.1",
   "description": "bootstrap a graphql/knex DB as fast as possible",
   "homepage": "https://github.com/wcastand/simplistik",
