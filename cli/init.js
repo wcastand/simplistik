@@ -43,10 +43,6 @@ function createSimplistikSeed(createDefaultUser = false) {
       fs.mkdirSync(knex_seeds_dir)
       console.info(`Knex seeds directory created at '${knex_seeds_dir}'`)
     }
-    if (createDefaultUser) {
-      const user_seed_file = path.resolve(knex_seeds_dir, 'simplistik_user.js')
-      fs.writeFileSync(user_seed_file, user_seed_content, 'utf-8')
-    }
     return resolve()
   })
 }
@@ -110,7 +106,7 @@ function createDBFile() {
   })
 }
 
-module.exports = async ({ createDefaultUser }) => {
+module.exports = async () => {
   await execa.shell(`${knex_path} init`).then(() => console.info(`Knex config created.`))
 
   await createDBFile().then(() => console.info(`default DB file created.`))
@@ -118,7 +114,7 @@ module.exports = async ({ createDefaultUser }) => {
   await createResolversGraphQL().then(() => console.info(`GraphQL resolvers file created.`))
 
   await createSimplistikMigration().then(() => console.info(`Knex migration file created.`))
-  await createSimplistikSeed(createDefaultUser).then(() => console.info(`Knex seed file created.`))
+  await createSimplistikSeed().then(() => console.info(`Knex seed file created.`))
 
   await execa
     .shell(`${knex_path} migrate:latest --knexfile ./knexfile.js`)
@@ -127,11 +123,5 @@ module.exports = async ({ createDefaultUser }) => {
     .shell(`${knex_path} seed:run --knexfile ./knexfile.js`)
     .then(() => console.info(`seeding OK.`))
 
-  if (createDefaultUser) {
-    const token = jwt.sign({ id: 1, username: 'admin' }, process.env.secret || 'yoursecret')
-    console.log(`Admin api_key is : ${token}`)
-    console.log('Use it in the Authorization HTTP-Header :')
-    console.log('Authorization: Bearer <api_key>')
-  }
   process.exit()
 }

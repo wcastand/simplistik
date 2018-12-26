@@ -12,11 +12,10 @@ const cli = meow(
     $ simplistik <input>
 
   Options
-    --admin, -a Create a default user
-    --username, -u Username for a new user
+    --username, -u Username for a new user, return an api_key
 
 	Examples
-		$ simplistik init -a
+		$ simplistik init
 		$ simplistik migrate:make products_migration
 		$ simplistik migrate:latest
 		$ simplistik seed:make products_seed
@@ -43,7 +42,7 @@ const cli = meow(
 switch (cli.input[0]) {
   case 'init':
     const init = require('./init')
-    init({ createDefaultUser: cli.flags.admin })
+    init()
     break
   case 'migrate:make':
     execa(knex_path, ['migrate:make', cli.input[1]]).stdout.pipe(process.stdout)

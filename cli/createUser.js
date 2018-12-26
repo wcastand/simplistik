@@ -11,10 +11,9 @@ module.exports = async username => {
 
     const user = { id, username }
     const token = jwt.sign(user, process.env.secret || 'yoursecret')
-    console.log(user)
     console.log(`Admin api_key is : ${token}`)
     console.log('Use it in the Authorization HTTP-Header :')
-    console.log('Authorization: Bearer <api_key>')
+    console.log(`Bearer ${token}`)
   } catch (err) {
     console.error(err)
   }
