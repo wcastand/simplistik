@@ -128,3 +128,14 @@ the api should return :
 #### TODO : delete-user (--mail, -m)
 
 - delete the user from db
+
+
+# Goal
+
+I separate into 2 packages because the goal is to make the cli optionnal, removing the boilterplate it creates (default files)
+
+We should be able to use simplistik without it by providing only a graphql schema and graphql resolvers. Obviously the main problem is the auth part where we need somehow to add simplistik_user table to your db and into the graphql schema/resovlers.
+
+Maybe making the simplistik_user table a requirements that you'll have to implement by yourself and make the api_key auth system optionnal could be a solution to make simplistik-cli completly optionnal.
+
+Right now the cli create basic file and most of them will need to be update by the user anyway because the DB connection are unique for everyone. Most of the "heavy lifting" in the getting started comes from heroku so maybe simplistik is already simple in itself.
